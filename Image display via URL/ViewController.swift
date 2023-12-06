@@ -28,5 +28,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        setupPicture()
+    }
+
+    private func setupPicture() {
+        let imageView = UIImageView()
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 4*view.frame.size.width/5).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: view.frame.size.width/2).isActive = true
+        
+        async {
+            let data = await fetchImageData()
+            guard let imageData = data else {
+                return
+            }
+            imageView.image = UIImage(data: imageData)
+        }
     }
 }
